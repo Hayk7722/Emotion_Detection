@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import pickle
 
-# Словарь эмоций
+
 out = {
     0: 'angry',
     1: 'disgusted',
@@ -13,7 +13,7 @@ out = {
     6: 'surprised'
 }
 
-# Загружаем модель
+
 with open('model.pkl', 'rb') as file:
     model = pickle.load(file)
 
@@ -29,7 +29,7 @@ while True:
         print("Не удалось получить кадр")
         break
 
-    # Подготовка кадра для модели
+   
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     resized = cv2.resize(gray, (48, 48))
     image = resized / 255.0
@@ -39,7 +39,7 @@ while True:
     y_pred = model.predict(image)
     label = out[np.argmax(y_pred)]
 
-    # Отображаем предсказанную эмоцию на изображении
+   
     cv2.putText(
         frame,
         f"Emotion: {label}",
@@ -51,10 +51,10 @@ while True:
         cv2.LINE_AA               # сглаживание
     )
 
-    # Показываем кадр с текстом
+    
     cv2.imshow("Emotion Detection", frame)
 
-    # Выход по клавише 'q'
+   
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
